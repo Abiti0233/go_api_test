@@ -15,13 +15,13 @@ import (
 func main() {
 	var cfg config.Config
 	if err := envconfig.Process("", &cfg); err != nil {
-		log.Fatal("failed to process env var: %v", err)
+		log.Fatalf("failed to process env var: %v", err)
 	}
 
 	// DB接続
 	db, err := infrastructure.NewPostgresDB(cfg)
 	if err != nil {
-		log.Fatal("failed to initialize db: %v", err)
+		log.Fatalf("failed to initialize db: %v", err)
 	}
 	defer db.Close()
 
