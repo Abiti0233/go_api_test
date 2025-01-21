@@ -1,3 +1,3 @@
-module github.com/Abiti0233
+module todo-app
 
 go 1.23.4

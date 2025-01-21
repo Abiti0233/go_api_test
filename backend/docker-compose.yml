@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: my-todo-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=mytodo
+    ports:
+      - "5432:5432"
+    # schema.sql を /docker-entrypoint-initdb.d/schema.sql にマウントして
+    # コンテナ起動時に自動実行させる
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - mytodo-net
+
+  app:
+    build: .
+    container_name: my-todo-app
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      - APP_PORT=8080
+      - DB_HOST=db       # サービス名"db"で名前解決される
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=secret
+      - DB_NAME=mytodo
+    networks:
+      - mytodo-net
+
+networks:
+  mytodo-net:
+    driver: bridge
