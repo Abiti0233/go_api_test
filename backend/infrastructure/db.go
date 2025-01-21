@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	_"github.com/lib/pq"
-	"github.com/Abiti0233/go_api_test/config"
+	"github.com/Abiti0233/go_api_test/backend/config"
 )
 
 func NewPostgresDB(cfg config.Config) (*sql.DB, error) {

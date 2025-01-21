@@ -1,10 +1,10 @@
 package infrastructure
 
 import (
-	"databasse/sql"
+	"database/sql"
 	"errors"
 
-	"github.com/Abiti0233/go_api_test/domain"
+	"github.com/Abiti0233/go_api_test/backend/domain"
 )
 
 type postgresTodoRepository struct {
@@ -16,7 +16,7 @@ func NewPostgresTodoRepository(db *sql.DB) domain.TodoRepository {
 }
 
 func (r *postgresTodoRepository) GetAll() ([]*domain.Todo, error) {
-	rows, err := r.db.Query("SELECT id, done FROM todos ORDER BY id")
+	rows, err := r.db.Query("SELECT id, text, done FROM todos ORDER BY id")
 	if err != nil {
 		return nil, err
 	}
@@ -30,11 +30,14 @@ func (r *postgresTodoRepository) GetAll() ([]*domain.Todo, error) {
 		}
 		todos = append(todos, &t)
 	}
+	if todos == nil {
+		todos = []*domain.Todo{}
+	}
 	return todos, nil
 }
 
 func (r *postgresTodoRepository) GetByID(id int) (*domain.Todo, error) {
-	row := r.db.QueryRow("SELECT id, done FROM todos WHERE id = $1", id)
+	row := r.db.QueryRow("SELECT id, text, done FROM todos WHERE id = $1", id)
 	var t domain.Todo
 	if err := row.Scan(&t.ID, &t.Text, &t.Done); err != nil {
 		if err == sql.ErrNoRows {

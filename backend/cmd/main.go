@@ -3,12 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
-	"todo-app/interface/handler"
 
 	"github.com/kelseyhightower/envconfig"
 
 	"github.com/Abiti0233/go_api_test/backend/config"
-	"github.com/Abiti0233/go_api_test/backend/infrasructure"
+	"github.com/Abiti0233/go_api_test/backend/infrastructure"
 	"github.com/Abiti0233/go_api_test/backend/interface/handler"
 	"github.com/Abiti0233/go_api_test/backend/usecase"
 )
@@ -20,14 +19,14 @@ func main() {
 	}
 
 	// DB接続
-	db, err := infrasructure.NewPostgresDB(cfg)
+	db, err := infrastructure.NewPostgresDB(cfg)
 	if err != nil {
 		log.Fatal("failed to initialize db: %v", err)
 	}
 	defer db.Close()
 
 	// リポジトリ
-	todoRepo := infrasructure.NewPostgresTodoRepository(db)
+	todoRepo := infrastructure.NewPostgresTodoRepository(db)
 
 	// Usecase
 	todoUC := usecase.NewTodoUseCase(todoRepo)

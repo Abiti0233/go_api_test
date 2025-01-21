@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/Abiti0233/go_api_test/interface/usecase"
+	"github.com/Abiti0233/go_api_test/backend/usecase"
 )
 
 type TodoHandler struct {

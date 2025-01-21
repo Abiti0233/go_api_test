@@ -3,7 +3,7 @@ package usecase
 import (
 	"errors"
 
-	"github.com/Abiti0233/go_api_test/domain"
+	"github.com/Abiti0233/go_api_test/backend/domain"
 )
 
 type TodoUseCase interface {
